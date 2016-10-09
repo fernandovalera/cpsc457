@@ -97,6 +97,10 @@ extern "C" int privilege(void* func, mword a1, mword a2, mword a3, mword a4) {
   return syscallStub(SyscallNum::privilege, (mword)func, a1, a2, a3, a4);
 }
 
+extern "C" int syscallSummation(int a, int b) {
+	return syscallStub(SyscallNum::syscallSummationEnum, a, b);
+}
+
 /******* dummy functions *******/
 
 extern "C" int fstat(int fildes, struct stat *buf) {
