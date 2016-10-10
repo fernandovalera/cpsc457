@@ -31,6 +31,10 @@ extern "C" int syscallSummation(int a, int b) {
 	return a + b;
 }
 
+extern "C" bool syscall_isEven(long n) {
+	return !(n % 2);
+}
+
 // for C-style 'assert' (e.g., from malloc.c)
 extern "C" void __assert_func( const char* const file, size_t line,
   const char* const func, const char* const expr ) {
@@ -244,6 +248,7 @@ typedef ssize_t (*syscall_t)(mword a1, mword a2, mword a3, mword a4, mword a5);
 static const syscall_t syscalls[] = {
   syscall_t(_exit),
   syscall_t(syscallSummation),
+  syscall_t(isEven),
   syscall_t(open),
   syscall_t(close),
   syscall_t(read),

@@ -21,11 +21,14 @@ extern "C" int privilege(void*, mword, mword, mword, mword);
 
 extern "C" int syscallSummation(int a, int b);
 
+extern "C" bool isEven(long n);
+
 namespace SyscallNum {
 
 enum : mword {
   _exit = 0,
   syscallSummationEnum,
+  isEvenImpl,
   open,
   close,
   read,

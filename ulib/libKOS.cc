@@ -20,6 +20,10 @@
 
 int signum = 0;
 
+extern "C" bool isEven(long n) {
+	return syscallStub(SyscallNum::isEvenImpl);
+}
+
 extern "C" void _KOS_sigwrapper();
 
 extern "C" void _KOS_sighandler(mword s) {
