@@ -23,6 +23,12 @@ extern "C" int syscallSummation(int a, int b);
 
 extern "C" bool isEven(long n);
 
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask);
+	
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask); 
+	
+extern "C" int get_core_count();
+
 namespace SyscallNum {
 
 enum : mword {
@@ -31,6 +37,7 @@ enum : mword {
   isEvenImpl,
   sched_setaffinityEnum,
   sched_getaffinityEnum,
+  getCoreCountEnum,
   open,
   close,
   read,

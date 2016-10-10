@@ -116,11 +116,11 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
   switchThread(this);
 #else /* migration enabled */
   mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
-  if (mask == 0) {
-    Scheduler* target = Runtime::getCurrThread()->getAffinity();
+  Scheduler* target = NULL;
+  if (affinityMask == 0) {
+    target = Runtime::getCurrThread()->getAffinity();
   } else {
-	Scheduler* target = NULL;
-	mword minQueueSize = -1;
+	mword minQueueSize = 255;
 	
 	// get schedulers in affinity mask
     for (int i = 0; i < 64; i++) {

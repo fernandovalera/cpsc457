@@ -35,7 +35,7 @@ void whereAmI(){
 
 void printAffinity( cpu_set_t affinityMask ){
    mword cpuCount = get_core_count();
-	mword bitmask  = 0x1;
+   mword bitmask  = 0x1;
    for( mword i=0; i<cpuCount; i++ ){
 		if( (affinityMask & (bitmask << i)) != 0 ){
 			cout << "Current process has affinity to core "<<i << endl;

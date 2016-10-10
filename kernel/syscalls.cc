@@ -37,8 +37,8 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 		return -1;
 	}
 	
-	Thread* thread = Processor::getCurrThread();
-	thread.setAffinityMask(mask);
+	Thread* thread = LocalProcessor::getCurrThread();
+	thread->setAffinityMask(mask);
 
 	return 0;
 }
@@ -48,10 +48,16 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 		return -1;
 	}
 	
-	Thread* thread = Processor::getCurrThread();
-	*mask = thread.getAffinityMask();
+	Thread* thread = LocalProcessor::getCurrThread();
+	*mask = thread->getAffinityMask();
 	
 	return 0;
+}
+
+extern "C" int syscall_GetCoreCount() {
+	int core_count = static_cast<int>(Machine::getProcessorCount());
+	
+	return core_count;
 }
 
 extern "C" int syscallSummation(int a, int b) {
@@ -278,6 +284,7 @@ static const syscall_t syscalls[] = {
   syscall_t(syscall_isEven),
   syscall_t(sched_setaffinity),
   syscall_t(sched_getaffinity),
+  syscall_t(syscall_GetCoreCount),
   syscall_t(open),
   syscall_t(close),
   syscall_t(read),
