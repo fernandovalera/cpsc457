@@ -32,6 +32,9 @@ static const mword bytebits = 8;
 typedef char  buf_t;
 typedef char* bufptr_t;
 typedef const char* cbufptr_t;
+
+typedef uint64_t cpu_set_t;
+
 #else
 #error unsupported architecture: only __x86_64__ supported at this time
 #endif
