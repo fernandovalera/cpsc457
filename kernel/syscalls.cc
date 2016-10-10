@@ -49,7 +49,7 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 	}
 	
 	Thread* thread = Processor::getCurrThread();
-	Machine::setAffinity(thread, *mask);
+	*mask = thread.getAffinityMask();
 	
 	return 0;
 }
