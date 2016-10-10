@@ -27,6 +27,33 @@
 
 /******* libc functions *******/
 
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
+	if (pid != 0) { // pid must be 0
+		return -1;
+	}
+	
+	mword count = Machine::getProcessorCount();
+	if ((*mask) > (1<<(count-1))) { // cannot be greater than count processors
+		return -1;
+	}
+	
+	Thread* thread = Processor::getCurrThread();
+	thread.setAffinityMask(mask);
+
+	return 0;
+}
+
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
+	if (pid != 0) { // pid must be 0
+		return -1;
+	}
+	
+	Thread* thread = Processor::getCurrThread();
+	Machine::setAffinity(thread, *mask);
+	
+	return 0;
+}
+
 extern "C" int syscallSummation(int a, int b) {
 	return a + b;
 }
@@ -248,7 +275,9 @@ typedef ssize_t (*syscall_t)(mword a1, mword a2, mword a3, mword a4, mword a5);
 static const syscall_t syscalls[] = {
   syscall_t(_exit),
   syscall_t(syscallSummation),
-  syscall_t(isEven),
+  syscall_t(syscall_isEven),
+  syscall_t(sched_setaffinity),
+  syscall_t(sched_getaffinity),
   syscall_t(open),
   syscall_t(close),
   syscall_t(read),

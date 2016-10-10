@@ -34,6 +34,7 @@ class Thread : public EmbeddedList<Thread>::Link {
   mword priority;           // scheduling priority
   bool affinity;            // stick with scheduler
   Scheduler* nextScheduler; // resume on same core (for now)
+  mword affinityMask;		// which processor to run on
 
   Runtime::MachContext ctx;
   Runtime::ThreadStats stats;
@@ -83,7 +84,8 @@ public:
   Thread* setPriority(mword p)      { priority = p; return this; }
   Thread* setAffinity(Scheduler* s) { affinity = (nextScheduler = s); return this; }
   Scheduler* getAffinity() const    { return affinity ? nextScheduler : nullptr; }
-
+  Thread* setAffinityMask(mword m)	{ affinityMask = m; return this; }
+  mword getAffinityMask() const 	{ return affinityMask; }
   const Runtime::ThreadStats& getStats() const { return stats; }
 };
 

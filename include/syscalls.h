@@ -29,6 +29,8 @@ enum : mword {
   _exit = 0,
   syscallSummationEnum,
   isEvenImpl,
+  sched_setaffinityEnum,
+  sched_getaffinityEnum,
   open,
   close,
   read,

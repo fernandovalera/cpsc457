@@ -115,7 +115,27 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 #if TESTING_NEVER_MIGRATE
   switchThread(this);
 #else /* migration enabled */
-  Scheduler* target = Runtime::getCurrThread()->getAffinity();
+  mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
+  if (mask == 0) {
+    Scheduler* target = Runtime::getCurrThread()->getAffinity();
+  } else {
+	Scheduler* target = NULL;
+	mword minQueueSize = -1;
+	
+	// get schedulers in affinity mask
+    for (int i = 0; i < 64; i++) {
+      if ((affinityMask & (1<<i)) > 0) {
+		Scheduler* sched = Machine::getScheduler(i);
+	    mword queueSize = sched->readyCount;
+		
+		// pick scheduler with smallest queue size
+		if (minQueueSize == -1 || queueSize < minQueueSize) {
+		  minQueueSize = queueSize;
+		  target = sched;
+		}
+	  }
+	}
+  }
 #if TESTING_ALWAYS_MIGRATE
   if (!target) target = partner;
 #else /* simple load balancing */
