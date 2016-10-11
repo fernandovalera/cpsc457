@@ -26,14 +26,14 @@ typedef  int64_t sword;
 typedef mword vaddr;
 typedef mword paddr;
 
+typedef mword cpu_set_t;
+
 static const mword charbits = 8;
 static const mword bytebits = 8;
 
 typedef char  buf_t;
 typedef char* bufptr_t;
 typedef const char* cbufptr_t;
-
-typedef uint64_t cpu_set_t;
 
 #else
 #error unsupported architecture: only __x86_64__ supported at this time

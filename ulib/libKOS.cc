@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 #include "syscalls.h"
-
+#include "kostypes.h"
 #include <string.h>
 
 int signum = 0;
@@ -28,7 +28,7 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 	return syscallStub(SyscallNum::sched_getaffinityEnum);
 }
 
-extern "C" int get_core_count() {
+extern "C" long get_core_count() {
 	return syscallStub(SyscallNum::getCoreCountEnum);
 }
 

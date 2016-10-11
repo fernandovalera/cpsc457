@@ -44,7 +44,8 @@ inline void Scheduler::switchThread(Scheduler* target, Args&... a) {
   CHECK_LOCK_MIN(sizeof...(Args));
   Thread* nextThread;
   readyLock.acquire();
-  for (mword i = 0; i < (target ? idlePriority : maxPriority); i += 1) {
+//  for (mword i = 0; i < (target ? idlePriority : maxPriority); i += 1) {
+  for (mword i = 0; i < ((target == this) ? idlePriority : maxPriority); i += 1) {
     if (!readyQueue[i].empty()) {
       nextThread = readyQueue[i].pop_front();
       readyCount -= 1;
@@ -165,4 +166,9 @@ void Scheduler::terminate() {
   thr->state = Thread::Finishing;
   switchThread(nullptr);
   unreachable();
+}
+
+void Scheduler::yield() {
+	Runtime::RealLock rl;
+	preempt();
 }

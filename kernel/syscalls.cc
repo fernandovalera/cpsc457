@@ -21,6 +21,7 @@
 #include "kernel/Process.h"
 #include "world/Access.h"
 #include "machine/Processor.h"
+#include "machine/Machine.h"
 
 #include "syscalls.h"
 #include "pthread.h"
@@ -57,10 +58,8 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 	return 0;
 }
 
-extern "C" int syscall_GetCoreCount() {
-	int core_count = static_cast<int>(Machine::getProcessorCount());
-	
-	return core_count;
+extern "C" long syscall_GetCoreCount() {
+	return Machine::getProcessorCount();
 }
 
 extern "C" int syscallSummation(int a, int b) {
