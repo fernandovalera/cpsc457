@@ -129,7 +129,7 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 	    mword queueSize = sched->readyCount;
 		
 		// pick scheduler with smallest queue size
-		if (minQueueSize == -1 || queueSize < minQueueSize) {
+		if (queueSize < minQueueSize) {
 		  minQueueSize = queueSize;
 		  target = sched;
 		}

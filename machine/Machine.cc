@@ -117,7 +117,7 @@ static Semaphore asyncIrqSem;
 
 // get scheduler for idx processor
 Scheduler* Machine::getScheduler(mword idx) {
-	return (schedularTable + idx);
+	return (schedulerTable + idx);
 }
 
 // init routine for APs: on boot stack and using identity paging
