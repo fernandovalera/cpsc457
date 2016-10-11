@@ -17,8 +17,8 @@
 #include "kernel/Process.h"
 
 int InitProcess() {
-  Process* p5 = knew<Process>();
-  p5->exec("IsEven");
+//  Process* p5 = knew<Process>();
+//  p5->exec("IsEven");
   Process* p4 = knew<Process>();
   p4->exec("myprogram");
   Process* p0 = knew<Process>();
