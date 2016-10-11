@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 #include "syscalls.h"
+#include "kostypes.h"
 
 #include <string.h>
 
@@ -70,6 +71,11 @@ extern "C" off_t lseek(int fildes, off_t offset, int whence) {
   if (ret < 0) { *__errno() = -ret; return -1; } else return ret;
 }
 
+/*added by Priyaa*/
+extern "C" long get_core_count() {
+  return syscallStub(SyscallNum::get_core_count);
+}
+
 extern "C" pid_t getpid() {
   return syscallStub(SyscallNum::getpid);
 }
@@ -95,10 +101,6 @@ extern "C" int munmap(void* addr, size_t len) {
 
 extern "C" int privilege(void* func, mword a1, mword a2, mword a3, mword a4) {
   return syscallStub(SyscallNum::privilege, (mword)func, a1, a2, a3, a4);
-}
-
-extern "C" int syscallSummation(int a, int b) {
-	return syscallStub(SyscallNum::syscallSummationEnum, a, b);
 }
 
 /******* dummy functions *******/
