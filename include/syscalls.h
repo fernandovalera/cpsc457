@@ -17,8 +17,6 @@ extern "C" int munmap(void* addr, size_t len);
 
 extern "C" pid_t getcid();
 
-extern "C" long get_core_count();
-
 extern "C" int privilege(void*, mword, mword, mword, mword);
 
 extern "C" int syscallSummation(int a, int b);
@@ -28,6 +26,8 @@ extern "C" bool isEven(long n);
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask);
 	
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask); 
+	
+extern "C" long get_core_count();
 	
 namespace SyscallNum {
 

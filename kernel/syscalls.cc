@@ -28,6 +28,14 @@
 
 /******* libc functions *******/
 
+extern "C" int syscallSummation(int a, int b) {
+	return a + b;
+}
+
+extern "C" bool syscall_isEven(long n) {
+	return !(n % 2);
+}
+
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
 	if (pid != 0) { // pid must be 0
 		return -1;
@@ -60,14 +68,6 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 
 extern "C" long syscall_GetCoreCount() {
 	return Machine::getProcessorCount();
-}
-
-extern "C" int syscallSummation(int a, int b) {
-	return a + b;
-}
-
-extern "C" bool syscall_isEven(long n) {
-	return !(n % 2);
 }
 
 // for C-style 'assert' (e.g., from malloc.c)

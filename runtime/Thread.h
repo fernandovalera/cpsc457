@@ -84,7 +84,7 @@ public:
   Thread* setPriority(mword p)      { priority = p; return this; }
   Thread* setAffinity(Scheduler* s) { affinity = (nextScheduler = s); return this; }
   Scheduler* getAffinity() const    { return affinity ? nextScheduler : nullptr; }
-  Thread* setAffinityMask(mword m)	{ affinityMask = m; return this; }
+  void setAffinityMask(cpu_set_t m)	{ affinityMask = m; }
   cpu_set_t getAffinityMask() const { return affinityMask; }
   const Runtime::ThreadStats& getStats() const { return stats; }
 };
