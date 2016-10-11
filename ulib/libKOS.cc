@@ -20,6 +20,14 @@
 
 int signum = 0;
 
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
+	return syscallStub(SyscallNum::sched_setaffinityEnum);
+}
+	
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
+	return syscallStub(SyscallNum::sched_getaffinityEnum);
+}
+
 extern "C" int get_core_count() {
 	return syscallStub(SyscallNum::getCoreCountEnum);
 }
