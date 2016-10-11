@@ -115,6 +115,8 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 #if TESTING_NEVER_MIGRATE
   switchThread(this);
 #else /* migration enabled */
+  Scheduler* target = Runtime::getCurrThread()->getAffinity();
+  /*
   mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
   Scheduler* target = NULL;
   if (affinityMask == 0) {
@@ -136,6 +138,7 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 	  }
 	}
   }
+  */
 #if TESTING_ALWAYS_MIGRATE
   if (!target) target = partner;
 #else /* simple load balancing */

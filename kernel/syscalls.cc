@@ -33,9 +33,11 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 	}
 	
 	mword count = Machine::getProcessorCount();
-	mword maxMask = (1<<(count-1));
-	if ((*mask) > maxMask) { // cannot be greater than count processors
-		return -1;
+	if (count < 64) {
+		mword maxMaskPlusOne = (1<<count);
+		if ((*mask) >= maxMaskPlusOne) { // cannot be greater than count processors
+			return -1;
+		}
 	}
 	
 	Thread* thread = LocalProcessor::getCurrThread();
