@@ -33,7 +33,7 @@ extern "C" int syscallSummation(int a, int b) {
 }
 
 extern "C" long get_core_count() {
-	return Mahine::getProcessorCount();
+	return Machine::getProcessorCount();
 }
 
 // for C-style 'assert' (e.g., from malloc.c)
