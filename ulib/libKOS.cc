@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 #include "syscalls.h"
+#include "kostypes.h"
 
 #include <string.h>
 
@@ -99,6 +100,10 @@ extern "C" int privilege(void* func, mword a1, mword a2, mword a3, mword a4) {
 
 extern "C" int syscallSummation(int a, int b) {
 	return syscallStub(SyscallNum::syscallSummationEnum, a, b);
+}
+
+extern "C" long get_core_count() {
+	return syscallStub(SyscallNum::get_core_count);
 }
 
 /******* dummy functions *******/

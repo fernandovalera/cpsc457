@@ -21,6 +21,7 @@
 #include "kernel/Process.h"
 #include "world/Access.h"
 #include "machine/Processor.h"
+#include "machine/Machine.h"
 
 #include "syscalls.h"
 #include "pthread.h"
@@ -29,6 +30,10 @@
 
 extern "C" int syscallSummation(int a, int b) {
 	return a + b;
+}
+
+extern "C" long get_core_count() {
+	return Mahine::getProcessorCount();
 }
 
 // for C-style 'assert' (e.g., from malloc.c)
@@ -244,6 +249,7 @@ typedef ssize_t (*syscall_t)(mword a1, mword a2, mword a3, mword a4, mword a5);
 static const syscall_t syscalls[] = {
   syscall_t(_exit),
   syscall_t(syscallSummation),
+  syscall_t(get_core_count),
   syscall_t(open),
   syscall_t(close),
   syscall_t(read),

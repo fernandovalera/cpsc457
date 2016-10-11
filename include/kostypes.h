@@ -26,6 +26,8 @@ typedef  int64_t sword;
 typedef mword vaddr;
 typedef mword paddr;
 
+typedef mword cpu_set_t;
+
 static const mword charbits = 8;
 static const mword bytebits = 8;
 

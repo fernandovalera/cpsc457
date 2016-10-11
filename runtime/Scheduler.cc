@@ -44,7 +44,8 @@ inline void Scheduler::switchThread(Scheduler* target, Args&... a) {
   CHECK_LOCK_MIN(sizeof...(Args));
   Thread* nextThread;
   readyLock.acquire();
-  for (mword i = 0; i < (target ? idlePriority : maxPriority); i += 1) {
+//for (mword i = 0; i < (target ? idlePriority : maxPriority); i += 1) {
+  for (mword i = 0; i < ((target == this) ? idlePriority : maxPriority); i += 1) {
     if (!readyQueue[i].empty()) {
       nextThread = readyQueue[i].pop_front();
       readyCount -= 1;
@@ -115,7 +116,15 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 #if TESTING_NEVER_MIGRATE
   switchThread(this);
 #else /* migration enabled */
-  Scheduler* target = Runtime::getCurrThread()->getAffinity();
+  //Scheduler* target = Runtime::getCurrThread()->getAffinity();
+  Scheduler *target = nullptr;
+  mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
+  
+  if( affinityMask == 0 ) {
+	target = Runtime::getCurrThread()->getAffinity();
+  } else {
+	// TODO: Add code.  
+  }
 #if TESTING_ALWAYS_MIGRATE
   if (!target) target = partner;
 #else /* simple load balancing */
@@ -142,4 +151,9 @@ void Scheduler::terminate() {
   thr->state = Thread::Finishing;
   switchThread(nullptr);
   unreachable();
+}
+
+void Scheduler::yield() {
+	Runtime::RealLock rl;
+	preempt();
 }
