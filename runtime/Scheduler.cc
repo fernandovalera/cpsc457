@@ -133,12 +133,12 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
       * specified target's ready queue
       */
 	  mword processorCount = Machine::getProcessorCount(); 		// get processor count
-	  mword smallestReadyCount = 2048;							// set counter variable
-	  
+	  mword smallestReadyCount = 0xFFFFFFFFFFFFFFFF;			// set counter variable
+	  mword bitmask = 0x1;
 	  for (mword i = 0; i < processorCount; i++) {				// iterate through processors
 		Scheduler *pTarget = Machine::getScheduler(i);			// get scheduler on processor i
 		
-		if ((affinityMask & (1<<i)) > 0 && pTarget->readyCount < smallestReadyCount ) {	
+		if ((affinityMask & (bitmask<<i)) != 0 && pTarget->readyCount < smallestReadyCount ) {	
 		  target = pTarget;										// check if processor valid on mask
 		  smallestReadyCount = pTarget->readyCount;				// and that readyCount is smaller than smallestReadyCount
 		}
