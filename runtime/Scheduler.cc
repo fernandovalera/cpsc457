@@ -135,7 +135,7 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 	  mword processorCount = Machine::getProcessorCount(); 		// get processor count
 	  mword smallestReadyCount = 0;			// set counter variable
 	  mword bitmask = 0x1;
-	  bool targetSet = false
+	  bool targetSet = false;
 	  for (mword i = 0; i < processorCount; i++) {				// iterate through processors
 		Scheduler *pTarget = Machine::getScheduler(i);			// get scheduler on processor i
 		
