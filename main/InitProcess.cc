@@ -17,8 +17,8 @@
 #include "kernel/Process.h"
 
 int InitProcess() {
-//  Process* p4 = knew<Process>();
-//  p4->exec("myprogram");
+  Process* p4 = knew<Process>();
+  p4->exec("schedAffinityTest");
   Process* p0 = knew<Process>();
   p0->exec("systest");
 #if !TESTING_KEYCODE_LOOP
