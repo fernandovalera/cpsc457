@@ -25,11 +25,9 @@ int InitProcess() {
   Process* p1 = knew<Process>();
   p1->exec("kbloop");
 #endif
-#if THREADS
   Process* p2 = knew<Process>();
   p2->exec("threadtest");
   Process* p3 = knew<Process>();
   p3->exec("manythread");
-#endif
   return 0;
 }
