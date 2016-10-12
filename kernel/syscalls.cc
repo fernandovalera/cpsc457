@@ -121,7 +121,7 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 	if (pid != 0)
 		return -1; //-EPERM;
 	
-	mword affinityMask = mword(*mask);
+	mword affinityMask = *mask;
 	mword core_count = get_core_count();
 	
 	if (affinityMask >= (core_count << 1))
