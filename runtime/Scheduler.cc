@@ -123,7 +123,7 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
   Scheduler *target = nullptr;
   mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
   
-  Gdb::initGdb(0);
+  initGdb(0);
   
   if( affinityMask == 0 ) {
 	  /* use Martin's code when no affinity is set via bit mask */
