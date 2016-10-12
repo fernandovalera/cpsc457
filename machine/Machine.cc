@@ -444,7 +444,7 @@ void Machine::setAffinity(Thread& t, mword idx) {
   t.setAffinity(processorTable[idx].scheduler);
 }
 
-*Scheduler Machine::getScheduler(mword idx) {
+Scheduler* Machine::getScheduler(mword idx) {
 	KASSERT1(idx < processorCount, idx);
 	return processorTable[idx].scheduler;
 }

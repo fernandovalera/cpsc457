@@ -17,9 +17,9 @@ extern "C" int munmap(void* addr, size_t len);
 
 extern "C" pid_t getcid();
 
-extern "C" int sched_setaffinity(pid_t pid, size_t cpusetzie, cpu_set_t *mask);
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetzie, void *mask);
 
-extern "C" int sched_getaffinity(pid_t pid, size_t cpusetzie, cpu_set_t *mask);
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetzie, void *mask);
 
 extern "C" long get_core_count();
 
