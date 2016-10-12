@@ -121,18 +121,28 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
   //Scheduler* target =  Runtime::getCurrThread()->getAffinity();
   Scheduler *target = nullptr;
   mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
-
+  
   if( affinityMask == 0 ) {
 	  /* use Martin's code when no affinity is set via bit mask */
-	  target =  Runtime::getCurrThread()->getAffinity();
-   }  else {
+	  target = Runtime::getCurrThread()->getAffinity();
+    } else {
 	  /* CPSC457l: Add code here to scan the affinity mask
       * and select the processor with the smallest ready count.
       * Set the scheduler of the selected processor as target
       * switchThread(target) migrates the current thread to
       * specified target's ready queue
       */
-
+	  mword processorCount = Machine::getProcessorCount(); 		// get processor count
+	  mword smallestReadyCount = 2048;							// set counter variable
+	  
+	  for (mword i = 0; i < processorCount; i++) {				// iterate through processors
+		Scheduler *pTarget = Machine::getScheduler(i);			// get scheduler on processor i
+		
+		if ((affinityMask & (1<<i)) > 0 && pTarget->readyCount < smallestReadyCount ) {	
+		  target = pTarget;										// check if processor valid on mask
+		  smallestReadyCount = pTarget->readyCount;				// and that readyCount is smaller than smallestReadyCount
+		}
+	  }
    }
 
 #if TESTING_ALWAYS_MIGRATE

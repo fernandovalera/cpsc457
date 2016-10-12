@@ -117,6 +117,16 @@ extern "C" off_t lseek(int fildes, off_t offset, int whence) {
   return ret;
 }
 
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetzie, void *mask) {
+	
+	return 0;
+}
+
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetzie, void *mask) {
+	
+	return 0;
+}
+
 /* I have added a system call here - Priyaa */
 extern "C" long get_core_count(){
 	return Machine::getProcessorCount();
@@ -251,6 +261,8 @@ static const syscall_t syscalls[] = {
   syscall_t(read),
   syscall_t(write),
   syscall_t(lseek),
+  syscall_t(sched_setaffinity);
+  syscall_t(sched_getaffinity);
   syscall_t(get_core_count),
   syscall_t(getpid),
   syscall_t(getcid),

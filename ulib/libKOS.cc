@@ -71,7 +71,14 @@ extern "C" off_t lseek(int fildes, off_t offset, int whence) {
   if (ret < 0) { *__errno() = -ret; return -1; } else return ret;
 }
 
-/*added by Priyaa*/
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, void *mask) {
+	return syscallStub(SyscallNum::sched_setaffinity, pid, cpusetsize, mword(mask));
+}
+
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, void *mask) {
+	return syscallStub(SyscallNum::sched_getaffinity, pid, cpusetsize, mword(mask));	
+}
+
 extern "C" long get_core_count() {
   return syscallStub(SyscallNum::get_core_count);
 }
