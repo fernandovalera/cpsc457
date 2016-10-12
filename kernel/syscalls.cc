@@ -119,24 +119,25 @@ extern "C" off_t lseek(int fildes, off_t offset, int whence) {
 
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
 	if (pid != 0)
-		return -EPERM;
+		return -1; //-EPERM;
 	
 	mword affinityMask = mword(*mask);
 	mword core_count = get_core_count();
 	
 	if (affinityMask >= (core_count << 1))
-		return -EINVAL;
+		return -1; //-EINVAL;
 	
-	Runtime::getCurrThread()->setAffinityMask(*mask);
+	LocalProcessor::getCurrThread()->setAffinityMask(*mask);
+	LocalProcessor::getScheduler()->yield();
 	
 	return 0;
 }
 
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
 	if (pid != 0)
-		return -EPERM;
+		return -1 //-EPERM;
 
-	*mask = Runtime::getCurrThread()->getAffinityMask();
+	*mask = LocalProcessor::getCurrThread()->getAffinityMask();
 	
 	return 0;
 }
