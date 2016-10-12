@@ -117,12 +117,26 @@ extern "C" off_t lseek(int fildes, off_t offset, int whence) {
   return ret;
 }
 
-extern "C" int sched_setaffinity(pid_t pid, size_t cpusetzie, void *mask) {
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, void *mask) {
+	if (pid != 0)
+		return -EPERM;
+	
+	mword affinityMask = mword(*mask);
+	mword core_count = get_core_count();
+	
+	if (affinityMask >= (core_count << 1))
+		return -EINVAL;
+	
+	Runtime::getCurrThread()->setAffinityMask(cpu_set_t(*mask));
 	
 	return 0;
 }
 
-extern "C" int sched_getaffinity(pid_t pid, size_t cpusetzie, void *mask) {
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, void *mask) {
+	if (pid != 0)
+		return -EPERM;
+
+	*mask = Runtime::getCurrThread()->getAffinityMask();
 	
 	return 0;
 }
