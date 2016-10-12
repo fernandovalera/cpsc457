@@ -143,7 +143,7 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
 			(!targetSet || pTarget->readyCount < smallestReadyCount)) {	
 		  target = pTarget;										// check if processor valid on mask
 		  smallestReadyCount = pTarget->readyCount;				// and that readyCount is smaller than smallestReadyCount
-		  targetset = true;
+		  targetSet = true;
 		}
 	  }
    }
