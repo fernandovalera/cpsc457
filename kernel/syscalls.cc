@@ -135,9 +135,10 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) 
 
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask) {
 	if (pid != 0)
-		return -1 //-EPERM;
+		return -1; //-EPERM;
 
-	*mask = cpu_set_t(LocalProcessor::getCurrThread()->getAffinityMask());
+	Thread* cThread = LocalProcessor::getCurrThread();
+	*mask = cThread->getAffinityMask();
 	
 	return 0;
 }
