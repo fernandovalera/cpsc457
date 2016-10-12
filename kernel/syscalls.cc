@@ -261,8 +261,8 @@ static const syscall_t syscalls[] = {
   syscall_t(read),
   syscall_t(write),
   syscall_t(lseek),
-  syscall_t(sched_setaffinity);
-  syscall_t(sched_getaffinity);
+  syscall_t(sched_setaffinity),
+  syscall_t(sched_getaffinity),
   syscall_t(get_core_count),
   syscall_t(getpid),
   syscall_t(getcid),

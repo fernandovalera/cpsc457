@@ -23,7 +23,7 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetzie, cpu_set_t *mask);
 
 extern "C" long get_core_count();
 
-extern "C" int privilege(void*, mword, mword, mword, mword);"
+extern "C" int privilege(void*, mword, mword, mword, mword);
 
 namespace SyscallNum {
 
@@ -34,8 +34,8 @@ enum : mword {
   read,
   write,
   lseek,
-  sched_setaffinity;
-  sched_getaffinity; 
+  sched_setaffinity,
+  sched_getaffinity,
   get_core_count,
   getpid,
   getcid,
