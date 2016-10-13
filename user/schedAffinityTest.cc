@@ -5,7 +5,7 @@
 using namespace std;
 
 #define MASK1 0x1  // 00001
-#define MASK2 0x3  // 00011
+#define MASK2 0x2  // 00010
 #define MASK3 0x4  // 00100
 #define MASK4 0x8  // 01000
 #define MASK5 0x6  // 00110
