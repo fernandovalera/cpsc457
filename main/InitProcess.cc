@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 #include "kernel/Process.h"
+#define TESTING_ALL true
 
 int InitProcess() {
   Process* p4 = knew<Process>();
