@@ -19,7 +19,6 @@
 #include "runtime/Stack.h"
 #include "runtime/Thread.h"
 #include "kernel/Output.h"
-#include "gdb/Gdb.h"
 
 Scheduler::Scheduler() : readyCount(0), preemption(0), resumption(0), partner(this) {
   Thread* idleThread = Thread::create((vaddr)idleStack, minimumStack);
@@ -122,8 +121,6 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
   //Scheduler* target =  Runtime::getCurrThread()->getAffinity();
   Scheduler *target = nullptr;
   mword affinityMask = Runtime::getCurrThread()->getAffinityMask();
-  
-  initGdb(0);
   
   if( affinityMask == 0 ) {
 	  /* use Martin's code when no affinity is set via bit mask */
